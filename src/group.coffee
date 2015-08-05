@@ -96,7 +96,7 @@ module.exports = (robot) ->
     response = []
     tagged = []
     for g in group.groups()
-      if ///@#{g}///.test res.message.text
+      if ///(^|\s)@#{g}\b///.test res.message.text
         tagged.push g
     for g in tagged
       mem = group.members g
