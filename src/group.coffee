@@ -1,6 +1,11 @@
 # Description:
 #   A script that expands mentions of groups.
 #
+# Configuration:
+#   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames
+#     Valid settings are '<', '(', '[', and '{'. This variable can also be left
+#     unset (or be the empty string).
+#
 # Commands:
 #   hubot group list - list all group names
 #   hubot group dump - list all group names and members
@@ -16,6 +21,14 @@
 #   anishathalye
 
 IDENTIFIER = "[-._a-z0-9]+"
+
+decorate = (name) ->
+  switch process.env.HUBOT_GROUP_DECORATOR
+    when "<" then "<@#{name}>"
+    when "(" then "(@#{name})"
+    when "[" then "[@#{name}]"
+    when "{" then "{@#{name}}"
+    else "@#{name}"
 
 class Group
   constructor: (@robot) ->
@@ -101,7 +114,7 @@ module.exports = (robot) ->
     for g in tagged
       mem = group.members g
       if mem.length > 0
-        response.push "*@#{g}*: #{("@#{name}" for name in mem).join ", "}"
+        response.push "*@#{g}*: #{(decorate name for name in mem).join ", "}"
     if response.length > 0
       res.send response.join "\n"
 
