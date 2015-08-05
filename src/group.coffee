@@ -101,7 +101,7 @@ module.exports = (robot) ->
     for g in tagged
       mem = group.members g
       if mem.length > 0
-        response.push "*@#{g}*: #{("@#{name}" for name in mem).join ", "}"
+        response.push "*@#{g}*: #{("<@#{name}>" for name in mem).join ", "}"
     if response.length > 0
       res.send response.join "\n"
 
