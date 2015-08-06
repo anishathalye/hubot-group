@@ -22,14 +22,6 @@
 
 IDENTIFIER = "[-._a-z0-9]+"
 
-decorate = (name) ->
-  switch process.env.HUBOT_GROUP_DECORATOR
-    when "<" then "<@#{name}>"
-    when "(" then "(@#{name})"
-    when "[" then "[@#{name}]"
-    when "{" then "{@#{name}}"
-    else "@#{name}"
-
 class Group
   constructor: (@robot) ->
     @cache = {}
@@ -103,7 +95,16 @@ class Group
     return groups
 
 module.exports = (robot) ->
+  config = require('hubot-conf')('group', robot)
   group = new Group robot
+
+  decorate = (name) ->
+    switch config('decorator')
+      when "<" then "<@#{name}>"
+      when "(" then "(@#{name})"
+      when "[" then "[@#{name}]"
+      when "{" then "{@#{name}}"
+      else "@#{name}"
 
   robot.hear ///@#{IDENTIFIER}///, (res) ->
     response = []

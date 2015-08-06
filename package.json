@@ -1,23 +1,19 @@
 {
   "name": "hubot-group",
   "description": "A script that expands mentions of groups",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Anish Athalye <me@anishathalye.com>",
   "license": "MIT",
-
   "keywords": "hubot, hubot-scripts",
-
   "repository": {
     "type": "git",
     "url": "git://github.com/anishathalye/hubot-group.git"
   },
-
   "dependencies": {
+    "hubot-conf": "^1.0.0"
   },
-
   "peerDependencies": {
     "hubot": "2.x"
   },
-
   "main": "index.coffee"
 }
