@@ -131,7 +131,6 @@ module.exports = (robot) ->
 
   robot.respond ///group\s+create\s+(#{IDENTIFIER})///, (res) ->
     name = res.match[1]
-    console.log name
     if group.create name
       res.send "Created group #{name}."
     else
