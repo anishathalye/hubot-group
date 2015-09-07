@@ -112,10 +112,17 @@ module.exports = (robot) ->
     for g in group.groups()
       if ///(^|\s)@#{g}\b///.test res.message.text
         tagged.push g
+    decorated = {}
+    decorateOnce = (name) ->
+      if decorated[name]
+        name
+      else
+        decorated[name] = true
+        decorate name
     for g in tagged
       mem = group.members g
       if mem.length > 0
-        response.push "*@#{g}*: #{(decorate name for name in mem).join ", "}"
+        response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
       res.send response.join "\n"
 
