@@ -5,6 +5,9 @@
 #   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames
 #     Valid settings are '<', '(', '[', and '{'. This variable can also be left
 #     unset (or be the empty string).
+#   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
+#     message to the response. This variable can also be left unset (or be the
+#     empty string).
 #
 # Commands:
 #   hubot group list - list all group names
@@ -124,6 +127,8 @@ module.exports = (robot) ->
       if mem.length > 0
         response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
+      if config('prepend') == 'true'
+        response.unshift res.message.text
       res.send response.join "\n"
 
   robot.respond ///group\s+list///, (res) ->
