@@ -169,7 +169,7 @@ module.exports = (robot) ->
     names = res.match[2]
     names = names.split /\s+/
     if not group.exists g
-      res.send "Group #{name} does not exist!"
+      res.send "Group #{g} does not exist!"
       return
     response = []
     for name in names
@@ -184,7 +184,7 @@ module.exports = (robot) ->
     names = res.match[2]
     names = names.split /\s+/
     if not group.exists g
-      res.send "Group #{name} does not exist!"
+      res.send "Group #{g} does not exist!"
       return
     response = []
     for name in names
