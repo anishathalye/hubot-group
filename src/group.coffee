@@ -23,7 +23,7 @@
 # Author:
 #   anishathalye
 
-IDENTIFIER = "[-._a-z0-9]+"
+IDENTIFIER = "[-._a-zA-Z0-9]+"
 
 class Group
   constructor: (@robot) ->
