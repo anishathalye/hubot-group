@@ -1,5 +1,6 @@
 # Description:
-#   A script that expands mentions of groups.
+#   A script that expands mentions of groups. Groups themselves can be used as
+#   members if prepended with '&', and mentions will be expanded recursively.
 #
 # Configuration:
 #   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames
@@ -8,6 +9,8 @@
 #   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
 #     message to the response. This variable can also be left unset (or be the
 #     empty string).
+#   HUBOT_GROUP_RECURSE - set to 'false' to disable recursive group expansion.
+#     The setting defaults to true.
 #
 # Commands:
 #   hubot group list - list all group names
@@ -119,9 +122,21 @@ module.exports = (robot) ->
     for g in group.groups()
       if ///(^|\s)@#{g}\b///.test res.message.text
         tagged.push g
+    if config('recurse') != 'false'
+      process = (i for i in tagged)
+      while process.length > 0
+        g = process.shift()
+        for mem in group.members g
+          if mem[0] == '&'
+            mem = mem.substring 1
+            # it's a group
+            if mem not in process and mem not in tagged
+              tagged.push mem
+              process.push mem
+    # output results
     decorated = {}
     decorateOnce = (name) ->
-      if decorated[name]
+      if name[0] == '&' or decorated[name]
         name
       else
         decorated[name] = true
@@ -168,7 +183,7 @@ module.exports = (robot) ->
     else
       res.send "Either group #{from} does not exist or #{to} already exists!"
 
-  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(#{IDENTIFIER}(?:\s+#{IDENTIFIER})*)///, (res) ->
+  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
     g = res.match[1]
     names = res.match[2]
     names = names.split /\s+/
@@ -183,7 +198,7 @@ module.exports = (robot) ->
         response.push "#{name} is already in group #{g}!"
     res.send response.join "\n"
 
-  robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(#{IDENTIFIER}(?:\s+#{IDENTIFIER})*)///, (res) ->
+  robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
     g = res.match[1]
     names = res.match[2]
     names = names.split /\s+/
@@ -205,7 +220,7 @@ module.exports = (robot) ->
       return
     res.send "*@#{name}*: #{(group.members name).join ", "}"
 
-  robot.respond ///group\s+membership\s+(#{IDENTIFIER})///, (res) ->
+  robot.respond ///group\s+membership\s+(&?#{IDENTIFIER})///, (res) ->
     name = res.match[1]
     groups = group.membership name
     if groups.length > 0
