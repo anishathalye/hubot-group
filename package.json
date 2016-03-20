@@ -1,7 +1,7 @@
 {
   "name": "hubot-group",
   "description": "A script that expands mentions of groups",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "author": "Anish Athalye <me@anishathalye.com>",
   "license": "MIT",
   "keywords": "hubot, hubot-scripts",
