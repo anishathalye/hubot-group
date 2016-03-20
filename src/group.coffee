@@ -25,6 +25,10 @@
 
 IDENTIFIER = "[-._a-zA-Z0-9]+"
 
+sorted = (arr) ->
+  copy = (i for i in arr)
+  copy.sort()
+
 class Group
   constructor: (@robot) ->
     @cache = {}
@@ -40,10 +44,10 @@ class Group
       @robot.brain.data.group = @cache
 
   members: (group) =>
-    @cache[group] or []
+    sorted(@cache[group] or [])
 
   groups: =>
-    return Object.keys(@cache)
+    sorted(Object.keys(@cache))
 
   exists: (group) =>
     return @cache[group]?
