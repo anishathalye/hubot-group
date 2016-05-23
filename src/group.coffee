@@ -9,6 +9,9 @@
 #   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
 #     message to the response. This variable can also be left unset (or be the
 #     empty string).
+#   HUBOT_GROUP_TRUNCATE - number of characters from the original message to
+#     display, when HUBOT_GROUP_PREPEND is set. Leave unset (or <= 0) to
+#     disable truncating.
 #   HUBOT_GROUP_RECURSE - set to 'false' to disable recursive group expansion.
 #     The setting defaults to true.
 #
@@ -147,7 +150,10 @@ module.exports = (robot) ->
         response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
       if config('prepend') == 'true'
-        response.unshift res.message.text
+        truncate = parseInt config('truncate', '0')
+        text = res.message.text
+        message = if truncate > 0 then text.substring(0, truncate) + "..." else text
+        response.unshift message
       res.send response.join "\n"
 
   robot.respond ///group\s+list///, (res) ->
