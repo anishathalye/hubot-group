@@ -152,7 +152,8 @@ module.exports = (robot) ->
       if config('prepend') == 'true'
         truncate = parseInt config('truncate', '0')
         text = res.message.text
-        message = if truncate > 0 then text.substring(0, truncate) + "..." else text
+        message = if truncate > 0 and text.length > truncate \
+          then text.substring(0, truncate) + " [...]" else text
         response.unshift message
       res.send response.join "\n"
 
