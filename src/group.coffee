@@ -9,6 +9,9 @@
 #   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
 #     message to the response. This variable can also be left unset (or be the
 #     empty string).
+#   HUBOT_GROUP_PREPEND_USERNAME - set to 'true' to enable prepending the
+#     original username to the prepended message. This variable can also be
+#     left unset (or be the empty string).
 #   HUBOT_GROUP_TRUNCATE - number of characters from the original message to
 #     display, when HUBOT_GROUP_PREPEND is set. Leave unset (or <= 0) to
 #     disable truncating.
@@ -154,6 +157,8 @@ module.exports = (robot) ->
         text = res.message.text
         message = if truncate > 0 and text.length > truncate \
           then text.substring(0, truncate) + " [...]" else text
+        if config('prepend.username') == 'true'
+          message = "#{res.message.user.name}: #{message}"
         response.unshift message
       res.send response.join "\n"
 
