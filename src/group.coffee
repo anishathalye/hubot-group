@@ -3,18 +3,18 @@
 #   members if prepended with '&', and mentions will be expanded recursively.
 #
 # Configuration:
-#   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames
+#   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames.
 #     Valid settings are '<', '(', '[', and '{'. This variable can also be left
-#     unset (or be the empty string).
+#     unset. This setting defaults to '<'.
 #   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
-#     message to the response. This variable can also be left unset (or be the
-#     empty string).
+#     message to the response. This variable can also be left unset. This
+#     setting defaults to 'true'.
 #   HUBOT_GROUP_PREPEND_USERNAME - set to 'true' to enable prepending the
 #     original username to the prepended message. This variable can also be
-#     left unset (or be the empty string).
+#     left unset. This setting defaults to 'true'.
 #   HUBOT_GROUP_TRUNCATE - number of characters from the original message to
-#     display, when HUBOT_GROUP_PREPEND is set. Leave unset (or <= 0) to
-#     disable truncating.
+#     display when HUBOT_GROUP_PREPEND is set. Set to a value less than or
+#     equal to zero to disable truncating. This setting defaults to '50'.
 #   HUBOT_GROUP_RECURSE - set to 'false' to disable recursive group expansion.
 #     The setting defaults to true.
 #
@@ -115,7 +115,7 @@ module.exports = (robot) ->
   group = new Group robot
 
   decorate = (name) ->
-    switch config('decorator')
+    switch config('decorator', '<')
       when "<" then "<@#{name}>"
       when "(" then "(@#{name})"
       when "[" then "[@#{name}]"
@@ -152,12 +152,12 @@ module.exports = (robot) ->
       if mem.length > 0
         response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
-      if config('prepend') == 'true'
-        truncate = parseInt config('truncate', '0')
+      if config('prepend', 'true') == 'true'
+        truncate = parseInt config('truncate', '50')
         text = res.message.text
         message = if truncate > 0 and text.length > truncate \
           then text.substring(0, truncate) + " [...]" else text
-        if config('prepend.username') == 'true'
+        if config('prepend.username', 'true') == 'true'
           message = "#{res.message.user.name}: #{message}"
         response.unshift message
       res.send response.join "\n"
