@@ -51,11 +51,11 @@ and replacing `_` with `.`).
   Valid settings are `<`, `(`, `[`, and `{`. This variable can also be left
   unset. This seting defaults to `<`, which is appropriate for Slack.
 
-* `HUBOT_GROUP_PREPEND` - set to `true` to enable prepending the original
+* `HUBOT_GROUP_PREPEND` - set to `false` to enable prepending the original
   message to the response. This variable can also be left unset. This setting
   defaults to `true`.
 
-* `HUBOT_GROUP_PREPEND_USERNAME` - set to `true` to enable prepending the
+* `HUBOT_GROUP_PREPEND_USERNAME` - set to `false` to enable prepending the
   original username to the prepended message. This variable can also be left
   unset. This setting defaults to `true`.
 
