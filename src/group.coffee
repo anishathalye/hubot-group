@@ -6,17 +6,17 @@
 #   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames.
 #     Valid settings are '<', '(', '[', and '{'. This variable can also be left
 #     unset. This setting defaults to '<'.
-#   HUBOT_GROUP_PREPEND - set to 'true' to enable prepending the original
+#   HUBOT_GROUP_PREPEND - set to 'false' to disable prepending the original
 #     message to the response. This variable can also be left unset. This
 #     setting defaults to 'true'.
-#   HUBOT_GROUP_PREPEND_USERNAME - set to 'true' to enable prepending the
+#   HUBOT_GROUP_PREPEND_USERNAME - set to 'false' to disable prepending the
 #     original username to the prepended message. This variable can also be
 #     left unset. This setting defaults to 'true'.
 #   HUBOT_GROUP_TRUNCATE - number of characters from the original message to
 #     display when HUBOT_GROUP_PREPEND is set. Set to a value less than or
 #     equal to zero to disable truncating. This setting defaults to '50'.
 #   HUBOT_GROUP_RECURSE - set to 'false' to disable recursive group expansion.
-#     The setting defaults to true.
+#     The setting defaults to 'true'.
 #
 # Commands:
 #   hubot group list - list all group names
