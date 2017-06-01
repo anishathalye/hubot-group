@@ -167,7 +167,7 @@ module.exports = (robot) ->
   # robot.respond /ping group (.*)/i, (res) ->
   #   robot.emit "group ping", res.match[1], res.message.room, { text: " pinging!" }
 
-  # list groups membership over http, pretty & json'd
+  # list groups membership over http, as json
   robot.router.get ////hubot/groups?/dump///, (req,res) ->
     console.log "group/dump req.ip", req.ip, "res.ip", res.ip
     gd = group.objectify()
