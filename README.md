@@ -31,11 +31,25 @@ having to use environment variables, you should also install
 hubot-group is pretty intuitive to use. Run the help command (`{botname} help
 group`) in your chat to see help documentation.
 
+
 ## Tips
 
 * You can add groups to other groups by referring to a group as `&groupname`.
   For example, you can create a `frontend` group that contains a bunch of
   members, and then you can create a `dev` group that includes `&frontend`.
+
+## Access from other scripts
+
+Some `robot.on` functionality has been implemented to allow other scripts to intergrate with hubot-group. This expects a group name, room name, and an slack message object. An example is in src/group.coffee.
+
+```coffeescript
+robot.emit "group ping", "myGroup", "myRoom", { text: "pinging!" }
+```
+
+## Http
+
+Groups can be viewed over http at /hubot/group/dump.
+Individual groups can be seen at /hubot/group/info/`groupName`.
 
 ## Configuration
 
