@@ -88,9 +88,8 @@ class Group
   dump: =>
     response = []
     for g in @groups()
-      response.push "*@#{g}*: #{@members(g).join ", "}"
-    if response.length > 0 
-      return response
+      response.push "*@#{g}*: #{@members(g).join ", "}"  
+    return response
 
   tag: (text) =>
     # return array of groups found in a string
@@ -147,7 +146,7 @@ class Group
         if config('prepend.username', 'true') == 'true' and res.message.user.name
           message = "_#{res.message.user.name}:_ #{message}"
         response.unshift message
-      # console.log "Group.print", response
-      return response
+    # console.log "Group.print", response
+    return response
 # group = new Group robot
 module.exports = Group
