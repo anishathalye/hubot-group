@@ -47,7 +47,9 @@ module.exports = (robot) ->
 
   robot.hear ///@#{IDENTIFIER}///, (res) ->
     response = group.print(res)
-    res.send response.join "\n"
+    console.log "group heard", response
+    if response.length > 0
+      res.send response.join "\n"
 
   robot.respond ///group\s+list///, (res) ->
     res.send "Groups: #{group.groups().join ", "}"
