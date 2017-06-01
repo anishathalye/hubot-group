@@ -53,9 +53,11 @@ module.exports = (robot) ->
     res.send "Groups: #{group.groups().join ", "}"
 
   robot.respond ///group\s+dump///, (res) ->
-    response = ["Dumping groups:"]
-    response.push group.dump()
-    res.send response.join "\n"
+    response = group.dump()
+    if response.length > 0 
+      res.send response.join "\n"
+    else
+      res.send "No groups found!"
 
   robot.respond ///group\s+create\s+(#{IDENTIFIER})///, (res) ->
     name = res.match[1]
