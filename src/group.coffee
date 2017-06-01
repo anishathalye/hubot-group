@@ -49,13 +49,6 @@ module.exports = (robot) ->
     response = group.print(res)
     res.send response.join "\n"
 
-  robot.respond /g test (.*)/i, (res) ->
-    res.message.text = "@#{res.match[1]}"
-    response = group.print(res)
-    response.push "ping test!"
-    console.log "test", response
-    res.send response.join "\n"
-
   robot.respond ///group\s+list///, (res) ->
     res.send "Groups: #{group.groups().join ", "}"
 
@@ -102,7 +95,7 @@ module.exports = (robot) ->
         response.push "#{name} is already in group #{g}!"
     res.send response.join "\n"
 
-  # add self to a group or multipule groups
+  # add self to a group
   robot.respond ///login\s+(#{IDENTIFIER})///, (res) ->
     user = res.envelope.user.name
     g = res.match[1]
@@ -156,7 +149,6 @@ module.exports = (robot) ->
     else
       res.send "#{name} is not in any groups!"
 
-  #todo: be able to trigger a group response from other scripts via robot.emit "group ping" 
   robot.on "group ping", (g, room, messageObj = {} ) ->
     #messageobj is intended to be a slack message object, see https://api.slack.com/docs/message-formatting#message_formatting
     console.log "on group ping!", g, room

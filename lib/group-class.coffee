@@ -147,7 +147,7 @@ class Group
         if config('prepend.username', 'true') == 'true' and res.message.user.name
           message = "_#{res.message.user.name}:_ #{message}"
         response.unshift message
-      console.log "Group.print", response
+      # console.log "Group.print", response
       return response
 # group = new Group robot
 module.exports = Group
