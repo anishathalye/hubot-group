@@ -46,10 +46,11 @@ module.exports = (robot) ->
     console.log "groups on load", group.dump()
 
   robot.hear ///@#{IDENTIFIER}///, (res) ->
-    response = group.print(res)
-    console.log "group heard", response
-    if response.length > 0
-      res.send response.join "\n"
+    if res.envelope.user.name != robot.name
+      response = group.print(res)
+      console.log "group heard", response, res.envelope.user.name
+      if response.length > 0
+        res.send response.join "\n"
 
   robot.respond ///group\s+list///, (res) ->
     res.send "Groups: #{group.groups().join ", "}"
@@ -167,7 +168,23 @@ module.exports = (robot) ->
   # robot.respond /ping group (.*)/i, (res) ->
   #   robot.emit "group ping", res.match[1], res.message.room, { text: " pinging!" }
 
-  # list groups membership over http, as json
+  robot.on "group fn", ( fn ) =>
+    # send a function to this script that has access to group
+    console.log "on group fn!", fn
+    fn(group)
+
+  # example (to putin another script)
+  # robot.respond /logout all/i, (res) ->
+  #   robot.emit "group fn", (group) ->
+  #     user = res.envelope.user.name
+  #     groups = group.membership user
+  #     console.log user, groups
+  #     for g in groups
+  #       group.remove g, user
+  #       res.send "#{user} removed from group #{g}!"
+
+
+  # list groups membership over http, pretty & json'd
   robot.router.get ////hubot/groups?/dump///, (req,res) ->
     console.log "group/dump req.ip", req.ip, "res.ip", res.ip
     gd = group.objectify()
