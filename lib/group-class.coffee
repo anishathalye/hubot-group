@@ -105,7 +105,8 @@ class Group
     config = require('hubot-conf')('group', @robot)
     #decorate function requires config
     decorate = (name) ->
-      switch config('decorator', '<')
+      # @name is the default
+      switch config('decorator', '')
         when "<" then "<@#{name}>"
         when "(" then "(@#{name})"
         when "[" then "[@#{name}]"
