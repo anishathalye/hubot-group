@@ -5,7 +5,7 @@
 # Configuration:
 #   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames.
 #     Valid settings are '<', '(', '[', and '{'. This variable can also be left
-#     unset. This setting defaults to '<'.
+#     unset. This setting defaults to ''.
 #   HUBOT_GROUP_PREPEND - set to 'false' to disable prepending the original
 #     message to the response. This variable can also be left unset. This
 #     setting defaults to 'true'.
@@ -115,7 +115,7 @@ module.exports = (robot) ->
   group = new Group robot
 
   decorate = (name) ->
-    switch config('decorator', '<')
+    switch config('decorator', '')
       when "<" then "<@#{name}>"
       when "(" then "(@#{name})"
       when "[" then "[@#{name}]"
