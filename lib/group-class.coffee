@@ -148,5 +148,5 @@ class Group
         if config('prepend.username', 'true') == 'true' and res.message.user.name
           message = "_#{res.message.user.name}:_ #{message}"
         response.unshift message
-    return response.join config('separator', '\n')
+    return response
 module.exports = Group

@@ -41,6 +41,7 @@ Group = require( "../lib/group-class.coffee")
 
 module.exports = (robot) ->
   group = new Group robot
+  config = require('hubot-conf')('group', robot)
 
   robot.brain.on "loaded", (res) ->
     console.log "groups on load", group.dump()
@@ -50,7 +51,7 @@ module.exports = (robot) ->
       response = group.print(res)
       console.log "group heard", response, res.envelope.user.name
       if response.length > 0
-        res.send response
+        res.send response.join config('separator', '\n')
 
   robot.respond ///group\s+list///, (res) ->
     res.send "Groups: #{group.groups().join ", "}"
@@ -167,7 +168,7 @@ module.exports = (robot) ->
     res = { message: { user: {}}}
     res.message.text = "@#{g}"
     response = group.print(res)
-    messageObj.text += "\n" + response.join "\n"
+    messageObj.text += "\n" + response.join config('separator', '\n')
     robot.messageRoom room, messageObj
 
   # example for robot.on 'group ping'
