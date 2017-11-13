@@ -12,7 +12,7 @@ configurable via chat.
 
 In hubot project repo, run:
 
-`npm install hubot-group --save`
+`npm install defenestration/hubot-group --save`
 
 Then add **hubot-group** to your `external-scripts.json`:
 
@@ -79,6 +79,8 @@ and replacing `_` with `.`).
 
 * `HUBOT_GROUP_RECURSE` - set to `false` to disable recursive group expansion.
   This setting defaults to `true`.
+
+* `HUBOT_GROUP_SEPARATOR` - a string to separate the returned groups with, defaults to `\n` newline. Suggest to use a   space if you groups grow too large.
 
 ## License
 

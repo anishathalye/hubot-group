@@ -50,7 +50,7 @@ module.exports = (robot) ->
       response = group.print(res)
       console.log "group heard", response, res.envelope.user.name
       if response.length > 0
-        res.send response.join "\n"
+        res.send response
 
   robot.respond ///group\s+list///, (res) ->
     res.send "Groups: #{group.groups().join ", "}"
@@ -123,6 +123,12 @@ module.exports = (robot) ->
       res.send "#{user} punched out of #{g}! :wave:"
     else
       res.send "#{user} wasn't in #{g}!"
+
+  # log self out of all groups
+  robot.respond /logout(\s+all)?/, (res) ->
+    
+    res.send "logout of all groups!"
+
 
   robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
     g = res.match[1]

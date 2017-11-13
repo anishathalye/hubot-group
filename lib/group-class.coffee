@@ -139,6 +139,7 @@ class Group
       if mem.length > 0
         response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
+      # parameter: hubot_group_prepend
       if config('prepend', 'true') == 'true' and res.message.user.name
         truncate = parseInt config('truncate', '50')
         text = res.message.text
@@ -147,7 +148,5 @@ class Group
         if config('prepend.username', 'true') == 'true' and res.message.user.name
           message = "_#{res.message.user.name}:_ #{message}"
         response.unshift message
-    # console.log "Group.print", response
-    return response
-# group = new Group robot
+    return response.join config('separator', '\n')
 module.exports = Group
