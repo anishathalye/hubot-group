@@ -126,7 +126,7 @@ module.exports = (robot) ->
       res.send "#{user} wasn't in #{g}!"
 
   # log self out of all groups
-  robot.respond /logout(\s+all)?/, (res) ->
+  robot.respond /logout all/, (res) ->
     
     res.send "logout of all groups!"
 
@@ -164,12 +164,15 @@ module.exports = (robot) ->
   robot.on "group ping", (g, room, messageObj = {} ) ->
     #messageobj is intended to be a slack message object, see https://api.slack.com/docs/message-formatting#message_formatting
     console.log "on group ping!", g, room
-    return unless g and room
-    res = { message: { user: {}}}
-    res.message.text = "@#{g}"
-    response = group.print(res)
-    messageObj.text += "\n" + response.join config('separator', '\n')
-    robot.messageRoom room, messageObj
+    if g and room
+      res = { message: { user: {}}}
+      res.message.text = "@#{g}"
+      response = group.print(res)
+      messageObj.text += "\n" + response.join config('separator', '\n')
+      robot.messageRoom room, messageObj
+    else
+      #group doesn't exist, treat the sent group a normal slack group/user
+      robot.messageRoom room, messageObj.text += "\n @#{g}"
 
   # example for robot.on 'group ping'
   # robot.respond /ping group (.*)/i, (res) ->
