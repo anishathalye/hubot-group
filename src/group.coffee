@@ -5,7 +5,7 @@
 # Configuration:
 #   HUBOT_GROUP_DECORATOR - a character indicating how to decorate usernames.
 #     Valid settings are '<', '(', '[', and '{'. This variable can also be left
-#     unset. This setting defaults to ''.
+#     unset. This setting defaults to '<'.
 #   HUBOT_GROUP_PREPEND - set to 'false' to disable prepending the original
 #     message to the response. This variable can also be left unset. This
 #     setting defaults to 'true'.
@@ -54,6 +54,18 @@ class Group
 
   members: (group) =>
     sorted(@cache[group] or [])
+
+  info: (group) =>
+    if @cache[group].length > 0
+      arr = []
+      for m in @cache[group]
+        try
+          arr.push @robot.brain.data.users[m].name
+        catch err
+          arr.push m
+      return sorted(arr)
+    else
+      return []
 
   groups: =>
     sorted(Object.keys(@cache))
@@ -115,7 +127,7 @@ module.exports = (robot) ->
   group = new Group robot
 
   decorate = (name) ->
-    switch config('decorator', '')
+    switch config('decorator', '<')
       when "<" then "<@#{name}>"
       when "(" then "(@#{name})"
       when "[" then "[@#{name}]"
@@ -195,21 +207,6 @@ module.exports = (robot) ->
     else
       res.send "Either group #{from} does not exist or #{to} already exists!"
 
-  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
-    g = res.match[1]
-    names = res.match[2]
-    names = names.split /\s+/
-    if not group.exists g
-      res.send "Group #{g} does not exist!"
-      return
-    response = []
-    for name in names
-      if group.add g, name
-        response.push "#{name} added to group #{g}."
-      else
-        response.push "#{name} is already in group #{g}!"
-    res.send response.join "\n"
-
   robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
     g = res.match[1]
     names = res.match[2]
@@ -219,10 +216,14 @@ module.exports = (robot) ->
       return
     response = []
     for name in names
-      if group.remove g, name
-        response.push "#{name} removed from group #{g}."
-      else
-        response.push "#{name} is not in group #{g}!"
+      for k, u of robot.brain.data.users
+        if u.name==name
+          if group.remove g, u.id
+            response.push "#{name} removed from group #{g}."
+          else if group.remove g, name
+            response.push "#{name} removed from group #{g}."
+          else
+            response.push "#{name} is not in group #{g}!"
     res.send response.join "\n"
 
   robot.respond ///group\s+info\s+(#{IDENTIFIER})///, (res) ->
@@ -230,7 +231,7 @@ module.exports = (robot) ->
     if not group.exists name
       res.send "Group #{name} does not exist!"
       return
-    res.send "*@#{name}*: #{(group.members name).join ", "}"
+    res.send "*@#{name}*: #{(group.info name).join ", "}"
 
   robot.respond ///group\s+membership\s+(&?#{IDENTIFIER})///, (res) ->
     name = res.match[1]
@@ -239,3 +240,22 @@ module.exports = (robot) ->
       res.send "#{name} is in #{group.membership(name).join ", "}."
     else
       res.send "#{name} is not in any groups!"
+
+  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
+    g = res.match[1]
+    names = res.match[2]
+    names = names.split /\s+/
+    if not group.exists g
+      res.send "Group #{g} does not exist!"
+      return
+    response = []
+    for n in names
+      for k, u of robot.brain.data.users
+        if u.name==n
+          if group.add g, u.id
+            response.push "#{n} added to group #{g}."
+            break
+          else
+            response.push "#{n} is already in group #{g}!"
+            break
+    res.send response.join "\n"
