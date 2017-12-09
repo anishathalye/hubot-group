@@ -206,7 +206,26 @@ module.exports = (robot) ->
       res.send "Renamed group #{from} to #{to}."
     else
       res.send "Either group #{from} does not exist or #{to} already exists!"
-
+      
+  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
+    g = res.match[1]
+    names = res.match[2]
+    names = names.split /\s+/
+    if not group.exists g
+      res.send "Group #{g} does not exist!"
+      return
+    response = []
+    for n in names
+      for k, u of robot.brain.data.users
+        if u.name==n
+          if group.add g, u.id
+            response.push "#{n} added to group #{g}."
+            break
+          else
+            response.push "#{n} is already in group #{g}!"
+            break
+    res.send response.join "\n"
+    
   robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
     g = res.match[1]
     names = res.match[2]
@@ -217,7 +236,7 @@ module.exports = (robot) ->
     response = []
     for name in names
       for k, u of robot.brain.data.users
-        if u.name==name
+        if u.name == name
           if group.remove g, u.id
             response.push "#{name} removed from group #{g}."
           else if group.remove g, name
@@ -240,22 +259,3 @@ module.exports = (robot) ->
       res.send "#{name} is in #{group.membership(name).join ", "}."
     else
       res.send "#{name} is not in any groups!"
-
-  robot.respond ///group\s+add\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
-    g = res.match[1]
-    names = res.match[2]
-    names = names.split /\s+/
-    if not group.exists g
-      res.send "Group #{g} does not exist!"
-      return
-    response = []
-    for n in names
-      for k, u of robot.brain.data.users
-        if u.name==n
-          if group.add g, u.id
-            response.push "#{n} added to group #{g}."
-            break
-          else
-            response.push "#{n} is already in group #{g}!"
-            break
-    res.send response.join "\n"
