@@ -131,7 +131,7 @@ module.exports = (robot) ->
     groups = group.membership user
     if groups
       group.remove(g, user) for g in groups
-      res.send "Logged out of #{groups.join(, )}!"
+      res.send "Logged out of #{groups.join ", "}!"
     else
       res.send "You weren't in any groups!"
 
