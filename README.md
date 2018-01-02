@@ -8,6 +8,69 @@ configurable via chat.
 
 ![Demo](https://raw.githubusercontent.com/anishathalye/hubot-group/docs/demo.png)
 
+```
+me [12:28 PM] 
+@bot group create workbusiness-onshift
+
+
+bot [12:28 PM] 
+Created group workbusiness-onshift.
+
+
+me [12:28 PM] 
+@bot group add workbusiness-onshift bakedslug boarsproduct glitteringunderline
+
+
+bot [12:28 PM] 
+bakedslug added to group workbusiness-onshift.
+boarsproduct added to group workbusiness-onshift.
+glitteringunderline added to group workbusiness-onshift.
+
+
+me [12:28 PM] 
+@workbusiness-onshift
+
+
+bot [12:28 PM] 
+_me_ | *@workbusiness-onshift*: @bakedslug, @boarsproduct, @glitteringunderline
+
+
+boarsproduct [12:28 PM] 
+Neat.
+
+
+me [12:28 PM] 
+help me @workbusiness-onshift you're my only hope
+
+
+bot [12:28 PM] 
+_me_ | *@workbusiness-onshift*: @bakedslug, @boarsproduct, @glitteringunderline
+
+
+me [12:29 PM] 
+@bot login workbusiness-onshift
+
+
+bot [12:29 PM] 
+me punched in to workbusiness-onshift!
+
+
+me [12:29 PM] 
+@workbusiness-onshift blah
+
+
+bot [12:29 PM] 
+_me_ | *@workbusiness-onshift*: @me, @bakedslug, @boarsproduct, @glitteringunderline
+
+
+me [12:29 PM] 
+@bot logout
+
+
+bot [12:29 PM] 
+me logged out of workbusiness-onshift! :wave:
+```
+
 ## Installation
 
 In hubot project repo, run:
@@ -31,12 +94,16 @@ having to use environment variables, you should also install
 hubot-group is pretty intuitive to use. Run the help command (`{botname} help
 group`) in your chat to see help documentation.
 
+* Use `@bot login $group` to log yourself into that group. You may have to omit automatically added @ prefixed to the group name (for now).
+* Use `@bot logout` to log yourself out of all groups, or `@bot logout $group` to logout of a specific one.
 
 ## Tips
 
 * You can add groups to other groups by referring to a group as `&groupname`.
   For example, you can create a `frontend` group that contains a bunch of
   members, and then you can create a `dev` group that includes `&frontend`.
+* For slack, the groups this creats exist outside of slack.  I suggest creating the same named slack group (with no users actually in it!) for   autocompletion purposes.
+
 
 ## Access from other scripts
 
