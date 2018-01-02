@@ -101,7 +101,7 @@ class Group
 
   print: (res) => 
     # needs res.message.text and (now) optionally res.message.user.name, possibly could parse groups before hand? or in different function
-    # hubot-conf is required
+    # hubot-conf is required, loads configs prefixed with group.
     config = require('hubot-conf')('group', @robot)
     #decorate function requires config
     decorate = (name) ->
@@ -140,13 +140,13 @@ class Group
         response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
     if response.length > 0
       # parameter: hubot_group_prepend
-      if config('prepend', 'true') == 'true' and res.message.user.name
-        truncate = parseInt config('truncate', '50')
+      if config('prepend.text', 'true') == 'true' and res.message.user.name
+        truncate = parseInt config('prepend.text.truncate', '50')
         text = res.message.text
         message = if truncate > 0 and text.length > truncate \
           then text.substring(0, truncate) + " [...]" else text
-        if config('prepend.username', 'true') == 'true' and res.message.user.name
-          message = "_#{res.message.user.name}:_ #{message}"
-        response.unshift message
+      if config('prepend.username', 'true') == 'true' and res.message.user.name
+        message = "_#{res.message.user.name}:_ #{message}"
+      response.unshift message
     return response
 module.exports = Group
