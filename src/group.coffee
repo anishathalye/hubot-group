@@ -30,6 +30,7 @@
 #   hubot group membership <name> - list groups that name is in
 #   hubot login <group> - add yourself to group
 #   hubot logout <group> - remove yourself from group
+#   hubot logout - remove yourself from all groups. 
 #
 # Author:
 #   anishathalye

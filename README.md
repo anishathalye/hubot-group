@@ -8,6 +8,8 @@ configurable via chat.
 
 ![Demo](https://raw.githubusercontent.com/anishathalye/hubot-group/docs/demo.png)
 
+## Text Demo
+
 ```
 me [12:28 PM] 
 @bot group create workbusiness-onshift
