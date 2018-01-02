@@ -95,13 +95,13 @@ class Group
     # return array of groups found in a string
     tagged = []
     for g in @groups()
-      if ///(^|\s)@#{g}\b///.test text
+      if ///(^|\s)@#{g}(\s|$)///.test text
         tagged.push g
     return tagged
 
   print: (res) => 
     # needs res.message.text and (now) optionally res.message.user.name, possibly could parse groups before hand? or in different function
-    #config is required
+    # hubot-conf is required
     config = require('hubot-conf')('group', @robot)
     #decorate function requires config
     decorate = (name) ->
