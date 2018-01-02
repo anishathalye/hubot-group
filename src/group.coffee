@@ -127,8 +127,13 @@ module.exports = (robot) ->
 
   # log self out of all groups
   robot.respond /logout all/, (res) ->
-    
-    res.send "logout of all groups!"
+    user = res.envelope.user.name
+    groups = group.membership user
+    if groups
+      group.remove(g, user) for g in groups
+      res.send "Logged out of #{groups.join(, )}!"
+    else
+      res.send "You weren't in any groups!"
 
 
   robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
