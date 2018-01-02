@@ -123,7 +123,7 @@ module.exports = (robot) ->
     if group.remove g, user
       res.send "#{user} punched out of #{g}! :wave:"
     else
-      res.send "#{user} wasn't in #{g}!"
+      res.send "#{user} was not in #{g}!"
 
   # log self out of all groups
   robot.respond /logout$/, (res) ->
@@ -131,9 +131,9 @@ module.exports = (robot) ->
     groups = group.membership user
     if groups
       group.remove(g, user) for g in groups
-      res.send "Logged out of #{groups.join ", "}!"
+      res.send "#{user} logged out of #{groups.join ", "}! :wave:"
     else
-      res.send "You weren't in any groups!"
+      res.send "#{user} was not in any groups!"
 
 
   robot.respond ///group\s+remove\s+(#{IDENTIFIER})\s+(&?#{IDENTIFIER}(?:\s+&?#{IDENTIFIER})*)///, (res) ->
