@@ -126,7 +126,7 @@ module.exports = (robot) ->
       res.send "#{user} wasn't in #{g}!"
 
   # log self out of all groups
-  robot.respond /logout all/, (res) ->
+  robot.respond /logout$/, (res) ->
     user = res.envelope.user.name
     groups = group.membership user
     if groups
