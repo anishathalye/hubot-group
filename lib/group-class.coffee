@@ -92,13 +92,13 @@ class Group
     return response
 
   tag: (text) =>
-    console.log "tag text", text
+    # console.log "tag text", text
     # return array of groups found in a string
     tagged = []
     for g in @groups()
-      if ///(^|\s)@#{g}(\s|$)///.test text
+      if ///(^|\s)@#{g}(\s|\?|:|$)///.test text
         tagged.push g
-    console.log "tagged", tagged
+    # console.log "tagged", tagged
     return tagged
 
   print: (res) => 
@@ -141,7 +141,7 @@ class Group
 
     for g in tagged
       mem = @members g
-      console.log "g", g, "mem", mem.join(" ~")
+      # console.log "g", g, "mem", mem.join(" ~")
       if mem.length > 0
         r = "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
         # console.log "r", r
