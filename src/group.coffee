@@ -40,8 +40,8 @@ IDENTIFIER = "[-._a-zA-Z0-9]+"
 Group = require( "../lib/group-class.coffee")
 
 module.exports = (robot) ->
-  group = new Group robot
   config = require('hubot-conf')('group', robot)
+  group = new Group robot, config
 
   robot.brain.on "loaded", (res) ->
     console.log "groups on load", group.dump()
@@ -49,7 +49,7 @@ module.exports = (robot) ->
   robot.hear ///@#{IDENTIFIER}///, (res) ->
     if res.envelope.user.name != robot.name
       response = group.print(res)
-      console.log "group heard", response, res.envelope.user.name
+      # console.log "group heard", response, res.envelope.user.name
       if response.length > 0
         res.send response.join config('separator', '\n')
 

@@ -1,6 +1,6 @@
 
 class Group
-  constructor: (@robot) ->
+  constructor: (@robot, @config) ->
     @cache = {}
 
     @robot.brain.on "loaded", @load
@@ -92,17 +92,19 @@ class Group
     return response
 
   tag: (text) =>
+    console.log "tag text", text
     # return array of groups found in a string
     tagged = []
     for g in @groups()
       if ///(^|\s)@#{g}(\s|$)///.test text
         tagged.push g
+    console.log "tagged", tagged
     return tagged
 
   print: (res) => 
     # needs res.message.text and (now) optionally res.message.user.name, possibly could parse groups before hand? or in different function
-    # hubot-conf is required, loads configs prefixed with group.
-    config = require('hubot-conf')('group', @robot)
+    # import config 
+    config = @config
     #decorate function requires config
     decorate = (name) ->
       # @name is the default
@@ -112,8 +114,10 @@ class Group
         when "[" then "[@#{name}]"
         when "{" then "{@#{name}}"
         else "@#{name}"
+
     #main bit from script
     response = []
+
     tagged = @tag(res.message.text) 
     if config('recurse') != 'false'
       process = (i for i in tagged)
@@ -134,19 +138,27 @@ class Group
       else
         decorated[name] = true
         decorate name
+
     for g in tagged
       mem = @members g
+      console.log "g", g, "mem", mem.join(" ~")
       if mem.length > 0
-        response.push "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
-    if response.length > 0
-      # parameter: hubot_group_prepend
-      if config('prepend.text', 'true') == 'true' and res.message.user.name
+        r = "*@#{g}*: #{(decorateOnce name for name in mem).join ", "}"
+        # console.log "r", r
+        response.push r
+    if response.length > 0 and res.message.user.name
+      prepend = []
+      
+      if config('prepend.username', 'true') == 'true'
+        prepend.push "_#{res.message.user.name}_"
+      
+      if config('prepend.text', 'false') == 'true' 
         truncate = parseInt config('prepend.text.truncate', '50')
         text = res.message.text
         message = if truncate > 0 and text.length > truncate \
           then text.substring(0, truncate) + " [...]" else text
-      if config('prepend.username', 'true') == 'true' and res.message.user.name
-        message = "_#{res.message.user.name}:_ #{message}"
-      response.unshift message
+        prepend.push "\"#{message}\""
+      response.unshift prepend.join(": ") if prepend.length > 0
+
     return response
 module.exports = Group
