@@ -217,7 +217,7 @@ module.exports = (robot) ->
     response = []
     for n in names
       for k, u of robot.brain.data.users
-        if u.name==n
+        if u.id==n
           if group.add g, u.id
             response.push "#{n} added to group #{g}."
             break
