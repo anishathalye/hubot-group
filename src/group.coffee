@@ -59,10 +59,7 @@ class Group
     if @cache[group].length > 0
       arr = []
       for m in @cache[group]
-        try
-          arr.push @robot.brain.data.users[m].name
-        catch err
-          arr.push m
+        arr.push @robot.brain.data.users[m].name
       return sorted(arr)
     else
       return []
@@ -238,8 +235,6 @@ module.exports = (robot) ->
       for k, u of robot.brain.data.users
         if u.name == name
           if group.remove g, u.id
-            response.push "#{name} removed from group #{g}."
-          else if group.remove g, name
             response.push "#{name} removed from group #{g}."
           else
             response.push "#{name} is not in group #{g}!"
