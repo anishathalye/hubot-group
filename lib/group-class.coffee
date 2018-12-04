@@ -96,7 +96,7 @@ class Group
     # return array of groups found in a string
     tagged = []
     for g in @groups()
-      if ///(^|\s)@#{g}(\s|\?|:|$)///.test text
+      if ///(^|\s)@#{g}(\s|\?|:|$|!|,|\.)///.test text
         tagged.push g
     # console.log "tagged", tagged
     return tagged

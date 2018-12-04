@@ -48,6 +48,7 @@ module.exports = (robot) ->
     console.log "groups on load", group.dump()
 
   robot.hear ///@#{IDENTIFIER}///, (res) ->
+    # actual matching done in group.tag
     if res.envelope.user.name != robot.name
       response = group.print(res)
       # console.log "group heard", response, res.envelope.user.name
