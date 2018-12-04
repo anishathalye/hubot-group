@@ -1,49 +1,26 @@
 {
-
   "name": "hubot-group",
+  "version": "1.9.8",
   "description": "A script that expands mentions of groups",
-  "version": "1.9.7"
-  "author": "Anish Athalye <me@anishathalye.com>",
-  "license": "MIT",
-  "keywords": "hubot, hubot-scripts",
+  "main": "index.coffee",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/anishathalye/hubot-group.git"
+    "url": "git+https://github.com/defenestration/hubot-group.git"
   },
-  "dependencies": {
-    "hubot-conf": "^1.0.0"
-  },
-  "description": "A script that expands mentions of groups",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "991defe1db8d3621236cfb4216164d0c94ff4171",
-    "tarball": "https://registry.npmjs.org/hubot-group/-/hubot-group-1.8.1.tgz"
-  },
-  "gitHead": "e1992a0f42d4f8dbbf272576103eb5d4c52b34f1",
-  "homepage": "https://github.com/anishathalye/hubot-group#readme",
   "keywords": [
     "hubot",
     "hubot-scripts"
   ],
+  "author": "Anish Athalye",
   "license": "MIT",
-  "main": "index.coffee",
-  "maintainers": [
-    {
-      "name": "anishathalye",
-      "email": "me@anishathalye.com"
-    }
-  ],
-  "name": "hubot-group",
-  "optionalDependencies": {},
-  "peerDependencies": {
-    "hubot": "2.x"
+  "bugs": {
+    "url": "https://github.com/defenestration/hubot-group/issues"
   },
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/anishathalye/hubot-group.git"
-  },
-  "scripts": {},
-  "version": "1.9.7"
+  "homepage": "https://github.com/defenestration/hubot-group#readme"
 }
