@@ -1,57 +1,14 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "hubot-group",
-        "scope": null,
-        "escapedName": "hubot-group",
-        "name": "hubot-group",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "/Users/alan/hubot"
-    ]
-  ],
-  "_from": "hubot-group@latest",
-  "_id": "hubot-group@1.9.0",
-  "_inCache": true,
-  "_location": "/hubot-group",
-  "_nodeVersion": "7.1.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/hubot-group-1.8.1.tgz_1496030582114_0.8462687015999109"
-  },
-  "_npmUser": {
-    "name": "anishathalye",
-    "email": "me@anishathalye.com"
-  },
-  "_npmVersion": "3.10.9",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "hubot-group",
-    "scope": null,
-    "escapedName": "hubot-group",
-    "name": "hubot-group",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/hubot-group/-/hubot-group-1.8.1.tgz",
-  "_shasum": "991defe1db8d3621236cfb4216164d0c94ff4171",
-  "_shrinkwrap": null,
-  "_spec": "hubot-group",
-  "_where": "/Users/alan/hubot",
-  "author": {
-    "name": "Anish Athalye",
-    "email": "me@anishathalye.com"
-  },
-  "bugs": {
-    "url": "https://github.com/anishathalye/hubot-group/issues"
+
+  "name": "hubot-group",
+  "description": "A script that expands mentions of groups",
+  "version": "1.9.7"
+  "author": "Anish Athalye <me@anishathalye.com>",
+  "license": "MIT",
+  "keywords": "hubot, hubot-scripts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/anishathalye/hubot-group.git"
   },
   "dependencies": {
     "hubot-conf": "^1.0.0"

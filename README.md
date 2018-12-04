@@ -132,7 +132,8 @@ and replacing `_` with `.`).
 
 * `HUBOT_GROUP_DECORATOR` - a character indicating how to decorate usernames.
   Valid settings are `<`, `(`, `[`, and `{`. This variable can also be left
-  unset. This seting defaults to `<`, which is appropriate for Slack.
+  unset. This seting defaults to `` (empty string), which is appropriate for
+  Slack.
 
 * `HUBOT_GROUP_PREPEND` - set to `false` to disable prepending the original
   message to the response. This variable can also be left unset. This setting
