@@ -4,7 +4,10 @@
   "version": "1.8.2",
   "author": "Anish Athalye <me@anishathalye.com>",
   "license": "MIT",
-  "keywords": ["hubot, hubot-scripts"],
+  "keywords": [
+    "hubot",
+    "hubot-scripts"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/anishathalye/hubot-group.git"
