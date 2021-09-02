@@ -6,7 +6,7 @@ configurable via chat.
 
 ## Demo
 
-![Demo](https://raw.githubusercontent.com/anishathalye/hubot-group/docs/demo.png)
+![Demo](https://raw.githubusercontent.com/anishathalye/assets/master/hubot-group/demo.png)
 
 ## Installation
 
